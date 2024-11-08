@@ -374,6 +374,13 @@ namespace TeamFiltration.Modules
             //Remove Disqualified accounts from the spray list
             var bufferuserNameList = userNameListGlobal.Except(diqualifiedAccounts.Select(x => x.Username.ToLower())).ToList();
 
+            //check we have any accounts left
+            if (bufferuserNameList.Count == 0)
+            {
+                databaseHandle.WriteLog(new Log("SPRAY", $"No valid accounts remaining after excluding previously disqualified accounts"));
+                Environment.Exit(0);
+            }
+
             //Query emails that has been sprayed in the last X minutes (based on sleep time)
             var accountsRecentlySprayed = databaseHandle.QuerySprayAttempts(currentSleepTime).OrderByDescending(x => x?.DateTime).ToList();
 
