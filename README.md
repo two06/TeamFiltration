@@ -94,6 +94,24 @@ Usage:
          --push-locked         Get Pushover notifications when an sprayed account gets locked (requires pushover keys in config)
          --force               Force the spraying to proceed even if there is less the <sleep> time since the last attempt
 
+ --validate       Load the validate module
+
+         --aad-sso             Use SecureWorks's Azure Active Directory password brute-forcing technique when spraying
+         --us-cloud            When spraying companies attached to US Tenants (https://login.microsoftonline.us/)
+
+         --userpasslist        Path to a list of period seperated usernames and passwords, i.e. user@exmaple.com:Welcome1
+         --shuffle-users       Shuffle the userpasslist before spraying
+         --shuffle-regions     Shuffle FireProx regions when spraying
+
+         --auto-exfil          If valid login is found, auto start the exfil module
+
+         --sleep-min           Minimum minutes to sleep between each full rotation of spraying default=60
+         --sleep-max           Maximum minutes to sleep between each full rotation of spraying default=100
+         --jitter              Seconds between each individual authentication attempt. default=0
+         --push                Get Pushover notifications when valid credentials are found (requires pushover keys in config)
+         --push-locked         Get Pushover notifications when an sprayed account gets locked (requires pushover keys in config)
+         --force               Force the spraying to proceed even if there is less the <sleep> time since the last attempt
+
    --enum        Load the enumeration module
 
          --domain              Domain to perfom enumeration against, names pulled from statistically-likely-usernames if not provided with --usernames
@@ -114,6 +132,7 @@ Usage:
         --outpath C:\Clients\2024\FooBar\TFOutput --config myCustomConfig.json --spray --sleep-min 120 --sleep-max 200 --push --shuffle-users --shuffle-regions
         --outpath C:\Clients\2024\FooBar\TFOutput --config myCustomConfig.json --spray --push-locked --months-only --exclude C:\Clients\2021\FooBar\Exclude_Emails.txt
         --outpath C:\Clients\2024\FooBar\TFOutput --config myCustomConfig.json --spray --passwords C:\Clients\2021\FooBar\Generic\Passwords.txt --time-window 13:00-22:00
+       --outpath C:\Clients\2023\FooBar\TFOutput --config myCustomConfig.json --validate --shuffle-users --userpasslist C:\Clients\2024\Example\foundCreds.txt
         --outpath C:\Clients\2024\FooBar\TFOutput --config myCustomConfig.json --exfil --cookie-dump C:\\CookieData.txt --all
         --outpath C:\Clients\2024\FooBar\TFOutput --config myCustomConfig.json --exfil --aad 
         --outpath C:\Clients\2024\FooBar\TFOutput --config myCustomConfig.json --exfil --tokens C:\\OutputTokens.txt --onedrive --owa
@@ -123,7 +142,6 @@ Usage:
         --outpath C:\Clients\2024\FooBar\TFOutput --config myCustomConfig.json --enum --validate-msol --usernames C:\Clients\2021\FooBar\OSINT\Usernames.txt
         --outpath C:\Clients\2024\FooBar\TFOutput --config myCustomConfig.json --backdoor
         --outpath C:\Clients\2024\FooBar\TFOutput --config myCustomConfig.json --database
-
 ```
 
 ## Credits
