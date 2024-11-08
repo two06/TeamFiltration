@@ -48,11 +48,26 @@ namespace TeamFiltration
             Console.WriteLine("         --shuffle-regions     Shuffle FireProx regions when spraying\n");
             Console.WriteLine("         --auto-exfil          If valid login is found, auto start the exfil module\n");
 
-
             Console.WriteLine("         --sleep-min           Minimum minutes to sleep between each full rotation of spraying default=60");
             Console.WriteLine("         --sleep-max           Maximum minutes to sleep between each full rotation of spraying default=100");
             Console.WriteLine("         --jitter              Seconds between each individual authentication attempt. default=0");
             Console.WriteLine("         --time-window         Defines a time windows where spraying should accour, in the military time format <12:00-19:00>");
+            Console.WriteLine("         --push                Get Pushover notifications when valid credentials are found (requires pushover keys in config)");
+            Console.WriteLine("         --push-locked         Get Pushover notifications when an sprayed account gets locked (requires pushover keys in config)");
+            Console.WriteLine("         --force               Force the spraying to proceed even if there is less the <sleep> time since the last attempt\n");
+
+            Console.WriteLine("   --validate       Load the validate module\n");
+            Console.WriteLine("         --aad-sso             Use SecureWorks's Azure Active Directory password brute-forcing technique when spraying");
+            Console.WriteLine("         --us-cloud            When spraying companies attached to US Tenants (https://login.microsoftonline.us/)\n");
+
+            Console.WriteLine("         --userpasslist        Path to a list of period seperated usernames and passwords, i.e. user@exmaple.com:Welcome1");
+            Console.WriteLine("         --shuffle-users       Shuffle the userpasslist before spraying");
+            Console.WriteLine("         --shuffle-regions     Shuffle FireProx regions when spraying\n");
+            Console.WriteLine("         --auto-exfil          If valid login is found, auto start the exfil module\n");
+
+            Console.WriteLine("         --sleep-min           Minimum minutes to sleep between each full rotation of spraying default=60");
+            Console.WriteLine("         --sleep-max           Maximum minutes to sleep between each full rotation of spraying default=100");
+            Console.WriteLine("         --jitter              Seconds between each individual authentication attempt. default=0");
             Console.WriteLine("         --push                Get Pushover notifications when valid credentials are found (requires pushover keys in config)");
             Console.WriteLine("         --push-locked         Get Pushover notifications when an sprayed account gets locked (requires pushover keys in config)");
             Console.WriteLine("         --force               Force the spraying to proceed even if there is less the <sleep> time since the last attempt\n");
@@ -73,6 +88,7 @@ namespace TeamFiltration
             Console.WriteLine("   Examples:\n");
             Console.WriteLine(@"        --outpath C:\Clients\2023\FooBar\TFOutput --config myCustomConfig.json --spray --sleep-min 120 --sleep-max 200 --push --shuffle-users --shuffle-regions");
             Console.WriteLine(@"        --outpath C:\Clients\2023\FooBar\TFOutput --config myCustomConfig.json --spray --push-locked --months-only --exclude C:\Clients\2021\FooBar\Exclude_Emails.txt");
+            Console.WriteLine(@"        --outpath C:\Clients\2023\FooBar\TFOutput --config myCustomConfig.json --validate --shuffle-users --userpasslist C:\Clients\2024\Example\foundCreds.txt");
             Console.WriteLine(@"        --outpath C:\Clients\2023\FooBar\TFOutput --config myCustomConfig.json --spray --passwords C:\Clients\2021\FooBar\Generic\Passwords.txt --time-window 13:00-22:00");
             Console.WriteLine(@"        --outpath C:\Clients\2023\FooBar\TFOutput --config myCustomConfig.json --exfil --cookie-dump C:\\CookieData.txt --all");
             Console.WriteLine(@"        --outpath C:\Clients\2023\FooBar\TFOutput --config myCustomConfig.json --exfil --aad ");
@@ -147,7 +163,10 @@ namespace TeamFiltration
 
                 else if (args.Contains("--database"))
                     Database.DatabaseStart(args);
-                
+
+                else if (args.Contains("--validate"))
+                    await Validate.ValidateAsync(args);
+
             }
 
         }
